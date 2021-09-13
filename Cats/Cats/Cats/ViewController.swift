@@ -10,8 +10,10 @@ import FirebaseDatabase
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var curr: UILabel!
     
     @IBOutlet weak var field: UITextField!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +21,11 @@ class ViewController: UIViewController {
         let ref = Database.database().reference()
         
         ref.child("id").setValue("Mike")
+        ref.child("id").observeSingleEvent(of: .value) {
+            (snapshot )in
+            let name = snapshot.value as? String
+            self.curr.text = name
+        }
     }
     
 
@@ -32,8 +39,13 @@ class ViewController: UIViewController {
         let ref = Database.database().reference()
         
         ref.child("id").setValue(x)
+        
+        ref.child("id").observeSingleEvent(of: .value) {
+            (snapshot )in
+            let name = snapshot.value as? String
+            self.curr.text = name
+        }
     }
-    
 
 }
 
